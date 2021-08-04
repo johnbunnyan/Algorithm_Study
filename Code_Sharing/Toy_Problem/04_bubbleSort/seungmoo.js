@@ -1,6 +1,5 @@
 const bubbleSort = function (arr) {
   let count = 0;
-
   for (let i = 0; i < arr.length - 1; i++) {
     for (let e = 0; e < arr.length - 1 - i; e++) {
       // 현재 요소가 다음 요소보다 크다면 위치를 바꿔준다.
@@ -17,4 +16,3 @@ const bubbleSort = function (arr) {
   }
   return arr;
 };
-
