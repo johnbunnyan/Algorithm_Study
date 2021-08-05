@@ -36,18 +36,34 @@ N = 3 일 경우. 총 3개의 조가 있다. 3개의 조가 가질 수 있는 �
 
 // 기본 순열 공식 (구냥 외우자)
 let str = "abc";
-let permutation = (str, result) => {
+let permutation = (result, str) => {
   if (str.length === 0) {
     console.log(result);
   }
   for (let i = 0; i < str.length; i++) {
     let rest = str.slice(0, i) + str.slice(i + 1);
-    permutation(rest, result + str[i]);
+    permutation(result + str[i], rest);
   }
 };
 
-permutation(str, ""); // abc acb bac bca cab cba
+permutation("", str); // abc acb bac bca cab cba
 
+// 순열 배열 공식. ex) [1,2,3] // [1,2,3], [1,3,2], [2,1,3] .....
+let permute = function (nums) {
+  const result = [];
+  const dfs = (cur, rest) => {
+    if (rest.length === 0) {
+      result.push(cur);
+      return;
+    }
+    for (let i = 0; i < rest.length; i++) {
+      dfs([...cur, rest[i]], [...rest.slice(0, i), ...rest.slice(i + 1)]);
+    }
+  };
+  dfs([], nums);
+
+  return result;
+};
 /*
 slice와 substring의 차이점 
 
