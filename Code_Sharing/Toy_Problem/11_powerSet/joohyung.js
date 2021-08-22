@@ -22,6 +22,31 @@ const powerSet = function (str) {
   return result.sort();
 };
 
+/********************* 새로운 방법 *********************/
+// 이 방법이 조금더 쉬운 것 같다. 일반적으로 powerSet구하는 방법도 가독성이 더 좋다
+const powerSet = function (str) {
+  let arr = overlap(str);
+  let result = [""];
+  for (let i = 0; i < arr.length; i++) {
+    let len = result.length;
+    for (let j = 0; j < len; j++) {
+      result.push(result[j].concat(arr[i]));
+    }
+  }
+  return result.sort();
+};
+// 중복되는 값이 있는지 확인 및 순서 정렬
+function overlap(str) {
+  let result = [];
+  str = str.split("").sort();
+  for (let i = 0; i < str.length; i++) {
+    if (!result.includes(str[i])) {
+      result.push(str[i]);
+    }
+  }
+  return result;
+}
+
 // 멱집합을 구하는 문제이다. 멱집합은 주어진 집합의 모든 부분집합의 집합이다.
 // 한마디로 그냥 str에서 나올 수 있는 모든 요소를 보여주는 것이다. 단 중복은 안 된다 ex) abc // a, b, c, abc, cba(이거는 안 됨)...
 // 출력의 순서는 '', a, b, ab, c, ac, bc, abc 이렇게 된다.
