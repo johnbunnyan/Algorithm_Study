@@ -74,3 +74,36 @@ function bubbleSort(array) {
   
   //크롬 개발자 도구에서 제시된 테스트 케이스는 다 정상출력하나, 실행시간 초과가 뜨는 걸 보면 입력값이 큰 경우에 시간이 오래 걸리는 것 같다.
   //버블 소트를 쓰는 것이 아니라 다른 방식으로 정렬해야 하는 듯
+
+
+  //레퍼런스
+  const merge = function (left, right) {
+    let merged = [];
+    let leftIdx = 0,
+      rightIdx = 0;
+    const size = left.length + right.length;
+  
+    for (let i = 0; i < size; i++) {
+      if (leftIdx >= left.length) {
+        merged.push(right[rightIdx]);
+        rightIdx++;
+      } else if (rightIdx >= right.length || left[leftIdx] <= right[rightIdx]) {
+        merged.push(left[leftIdx]);
+        leftIdx++;
+      } else {
+        merged.push(right[rightIdx]);
+        rightIdx++;
+      }
+    }
+  
+    return merged;
+  };
+  
+  const mergeSort = function (arr) {
+    if (arr.length < 2) return arr;
+    const middle = parseInt(arr.length / 2);
+    const left = mergeSort(arr.slice(0, middle));
+    const right = mergeSort(arr.slice(middle));
+    const merged = merge(left, right);
+    return merged;
+  };
