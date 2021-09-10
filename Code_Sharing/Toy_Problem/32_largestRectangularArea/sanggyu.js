@@ -1,5 +1,6 @@
 //어제 31_rangeMinimum가 구간트리 문제의 응용
-
+//참고 https://velog.io/@jeongho3786/Largest-rectangular-area-in-a-histogram
+//https://afteracademy.com/blog/largest-rectangle-in-a-histogram
 const largestRectangularArea = function (histogram) {
   
     //1. 주어진 histogram배열 기반으로 구간트리를 만든다(트리->재귀로 leaf만들기)
@@ -35,7 +36,7 @@ const largestRectangularArea = function (histogram) {
   //         5(2) 4(3)   5(4) 1(5)
   
   
-    //2. 해당 범위에서 가장 작은 인덱스
+    //2. 해당 범위에서 가장 작은 값의 인덱스
     //최종 getRangeArea메서드 위한 보조함수
     const getMinIdx = (ts, te, rs, re, tree) => {
       //재귀에 들어오면 해당 함수 내에서 변하는 인자에 주목
@@ -69,10 +70,12 @@ const largestRectangularArea = function (histogram) {
       // 즉 해당 구간에서 가장 작은 막대를 제외해서 만들 수 있는 가장 큰 직사각형의 넓이를 구한다.
       return Math.max(
                  //가로     x    높이
-        (end - start + 1) * histogram[minIdx], // 첫번째 후보
+        (end - start + 1) * histogram[minIdx], // 첫번째 후보 작은 막대의 높이를 기준으로 구간 길이를 곱해, 첫번째 사각형을 만든다.
+        //작은 막대를 기준으로 왼쪽 구간과 오른쪽 구간을 나눈다.
         getRangeArea(start, minIdx - 1),
         getRangeArea(minIdx + 1, end)
-      );
+      );//첫번재 후보와 왼쪽 구간 후보, 오른쪽 구간 후보 중 가장 큰 값을 리턴한다.
+      //왼쪽 구간 후보와 오른쪽 구간 후보는 각각 위의 과정을 거친 값이다. (재귀)
     };
   
     return getRangeArea(0, histogram.length - 1);
@@ -93,5 +96,6 @@ const largestRectangularArea = function (histogram) {
   // 이 사각형은 전체 구간(0 ~ n-1) 중 
   // 가장 낮은 막대를 포함하고 있거나(i === 0 && j === n-1)
   
-  // 가장 낮은 막대를 포함하고 있지않은 경우(k < i이거나 j < k:가장작은막대가 직사각형 시작전 또는 직사각형 끝 후)
-  // 가장 낮은 막대가 직사각형이 차지하는 구간 바깥에 존재합니다. 
+  
+  
+  
